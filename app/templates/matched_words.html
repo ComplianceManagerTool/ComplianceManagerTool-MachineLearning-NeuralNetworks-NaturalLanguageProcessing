@@ -3,23 +3,23 @@
 <html lang="en">
 <head>
 	<title>Login V1</title>
-	<meta charset="UTF-8">
+    <meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 <!--===============================================================================================-->	
-	<link rel="icon" type="image/png" href="images/icons/favicon.ico"/>
+	<link rel="icon" type="image/png" href="../static/images/icons/favicon.ico"/>
 <!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="vendor/bootstrap/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="../static/vendor/bootstrap/css/bootstrap.min.css">
 <!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet" type="text/css" href="../static/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
 <!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="vendor/animate/animate.css">
+	<link rel="stylesheet" type="text/css" href="../static/vendor/animate/animate.css">
 <!--===============================================================================================-->	
-	<link rel="stylesheet" type="text/css" href="vendor/css-hamburgers/hamburgers.min.css">
+	<link rel="stylesheet" type="text/css" href="../static/vendor/css-hamburgers/hamburgers.min.css">
 <!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="vendor/select2/select2.min.css">
+	<link rel="stylesheet" type="text/css" href="../static/vendor/select2/select2.min.css">
 <!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="css/util.css">
-	<link rel="stylesheet" type="text/css" href="css/main.css">
+	<link rel="stylesheet" type="text/css" href="../static/styles/util.css">
+	<link rel="stylesheet" type="text/css" href="../static/styles/main.css">
 <!--===============================================================================================-->
 
 	<link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" rel="stylesheet" id="bootstrap-css">
@@ -83,7 +83,7 @@
                   </table>
                 <div class="container-login100-form-btn">
                     <button class="login100-form-btn">
-                        Match regulatory document woth business glossary
+                        Match regulatory document with business glossary
                     </button>
                 </div>
             <br>
@@ -123,12 +123,15 @@
     // }
     
     // createTable([["row 1, cell 1", "row 1, cell 2","dfd"], ["row 2, cell 1", "row 2, cell 2","sdfds"]]);
-var arr = [
+/*var arr = [
     {"Matchedword":'0gggg00', "count_in_bus":'25', "count_in_regulatory_doc":'3'},
     {Matchedword:'000', "count_in_bus":'25', count_in_regulatory_doc:'3'}
 
-];
+];*/
 
+
+var arr = '{{ matchedWords }}';
+console.log(arr);
     // Find a <table> element with id="myTable":
 var table = document.getElementById("t01");
 
@@ -155,21 +158,21 @@ for(var i=0; i<arr.length ; i++){
 
 	
 <!--===============================================================================================-->	
-	<script src="vendor/jquery/jquery-3.2.1.min.js"></script>
+	<script src="../static/vendor/jquery/jquery-3.2.1.min.js"></script>
 <!--===============================================================================================-->
-	<script src="vendor/bootstrap/js/popper.js"></script>
-	<script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+	<script src="../static/vendor/bootstrap/js/popper.js"></script>
+	<script src="../static/vendor/bootstrap/js/bootstrap.min.js"></script>
 <!--===============================================================================================-->
-	<script src="vendor/select2/select2.min.js"></script>
+	<script src="../static/vendor/select2/select2.min.js"></script>
 <!--===============================================================================================-->
-	<script src="vendor/tilt/tilt.jquery.min.js"></script>
+	<script src="../static/vendor/tilt/tilt.jquery.min.js"></script>
 	<script >
 		$('.js-tilt').tilt({
 			scale: 1.1
 		})
 	</script>
 <!--===============================================================================================-->
-	<script src="js/main.js"></script>
+	<script src="../static/js/main.js"></script>
 
 </body>
 </html>

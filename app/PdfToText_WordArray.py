@@ -6,9 +6,9 @@ vocab1 = {}
 
 def createWordArray(file1,file2):
     # Load your PDF
-    with open("/home/akansha/Documents/295B/" + file1, "rb") as f1:
+    with open("/home/akansha/Documents/295B/ComplianceManagerTool-MachineLearning-NeuralNetworks-NaturalLanguageProcessing-master/Back-end/" + file1, "rb") as f1:
         businessGlossaryPdf = pdftotext.PDF(f1)
-    with open("/home/akansha/Documents/295B/" + file2, "rb") as f2:
+    with open("/home/akansha/Documents/295B/ComplianceManagerTool-MachineLearning-NeuralNetworks-NaturalLanguageProcessing-master/Back-end/" + file2, "rb") as f2:
         regulatoryDocPdf = pdftotext.PDF(f2)
     # Read all the text into one string
     businessGlossaryString = "".join(businessGlossaryPdf).lower() 
@@ -66,11 +66,14 @@ def getMatchedWords(arr01,arr02):
     for i in range(len(arr01)):
             if(arr01[i]!=0 and arr02[i]!=0):
                MatchedDict = {}
-               MatchedDict['Matchedword'] = vocab1[i]
-               MatchedDict['count in business glossary'] = arr01[i]
-               MatchedDict['count in regulatory doc'] = arr02[i]
+               if vocab1[i].isalpha():
+                   MatchedDict['Matchedword'] = vocab1[i]
+                   MatchedDict['count in business glossary'] = arr01[i]
+                   MatchedDict['count in regulatory doc'] = arr02[i]
+               else:
+                   continue
                result.append(MatchedDict)   
     return result   
 
-#list1,list2 = createWordArray("Glossary of banking terms _ American Banker1-merged.pdf", "California-Consumer-Privacy-Act1.pdf")
+#list1,list2 = createWordArray("file1.pdf", "file2.pdf")
 #print(getMatchedWords(list1,list2))
