@@ -36,7 +36,7 @@
 
 				<form class="login100-form validate-form">
 					<span class="login100-form-title">
-						Create your Account as a Compliance Manager
+						Create your Account as an Employee
 					</span>
 
 					<div class="wrap-input100 validate-input" data-validate = "Valid first name is required">
@@ -95,51 +95,59 @@
 						</span>
 					</div>
 
-					<div class="wrap-input100 validate-input" data-validate = "Organization name is required">
-						<input class="input100" type="text" name="address" placeholder="Company Title">
-						<span class="focus-input100"></span>
-						<span class="symbol-input100">
-							<i class="fa fa-building" aria-hidden="true"></i>
+					<div class="container-dropdown" data-validate = "Select one of the Organizations">
+						<h6>Select one of the Organizations: </h6>
+						<i class="fa fa-building" aria-hidden="true"></i> &nbsp
 						</span>
+							<select>
+						  		<option value="Apple">Apple</option>
+						  		<option value="Facebook">Facebook</option>
+						  		<option value="Google">Google</option>
+						  		<option value="Microsoft">Microsoft</option>
+							</select>
 					</div>
 
-					<div class="wrap-input100 validate-input" data-validate = "Company address is required">
-						<input class="input100" type="text" name="address" placeholder="Company Address">
-						<span class="focus-input100"></span>
-						<span class="symbol-input100">
-							<i class="fa fa-building-o" aria-hidden="true"></i>
+					<div class="container-dropdown" data-validate = "Select one of the Departments">
+						<h6>Select your department in the Organization: </h6>
+						<i class="fa fa-address-card-o" aria-hidden="true"></i> &nbsp
 						</span>
+							<select>
+						  		<option value="Finance">Finance</option>
+						  		<option value="HR">HR</option>
+						  		<option value="Techie">Techie</option>
+						  		<option value="Executive">Executive</option>
+							</select>
 					</div>
 
-
-					<div class="container">
-					<div class="row">
-						<input type="hidden" name="count" value="1" />
-        			<div class="control-group" id="fields">
-            		<label class="control-label" for="field1">Add Departments of your Organization: </label>
-            		<div class="controls" id="profs">
-                	<form class="input-append">
-                    <div id="field"><input autocomplete="off" class="input" id="field1" name="prof1" type="text" placeholder="Add department" data-items="8"/><button id="b1" class="btn add-more" type="button">+</button></div>
-
-                    <form enctype = "multipart/form-data"
-                     action = "./uploads" method = "post">
-   						<p>Upload your business glossary: <input type = "file" name = "filename" /></p>
-   						<!-- <p><input type = "submit" value = "Upload" /></p> -->
-   					</form>
+					<div class="wrap-input100 validate-input" data-validate = "Please enter your role title">
+						<h6>Please enter your role title: </h6>
+						<input class="input100" type="text" name="role" placeholder="Role Title">
+						<span class="focus-input100"></span>
+						<span class="symbol-input100">
+							<i class="fa fa-user-circle-o" aria-hidden="true"></i>
+						</span>
+					</div>
 
                 </form>
             <br>
 
-			<div class="container-login100-form-btn">
+            <div class="container-login100-form-btn">
 				<button class="login100-form-btn">
-					Sign up
+				    Login
 				</button>
 			</div>
 
 			<div class="text-center p-t-12">
-				<span class="txt2">
+				<span class="txt1">
 					Forgot Username / Password ?
 				</span>
+			</div>
+
+			<div class="text-center p-t-136">
+				<a class="txt1" href="/index.html">
+					Already have an account? Login
+					<i class="fa fa-long-arrow-right m-l-5" aria-hidden="true"></i>
+				</a>
 			</div>
 
             </div>
@@ -147,12 +155,6 @@
 	</div>
 </div>
 
-					<div class="text-center p-t-136">
-						<a class="txt1" href="/index.html">
-							Already have an account? Login
-							<i class="fa fa-long-arrow-right m-l-5" aria-hidden="true"></i>
-						</a>
-					</div>
 				</form>
 			</div>
 		</div>
