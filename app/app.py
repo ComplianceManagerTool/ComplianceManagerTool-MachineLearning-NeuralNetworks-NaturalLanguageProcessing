@@ -9,8 +9,11 @@ app = Flask(__name__)
 
 @app.route('/')
 def home():
-    return render_template('signup_manager.html')
+    return render_template('login.html')
 
+@app.route('/signup')
+def signup():
+    return render_template('signup_manager.html')
 
 #@app.route('/upload')
 #def upload_file():
