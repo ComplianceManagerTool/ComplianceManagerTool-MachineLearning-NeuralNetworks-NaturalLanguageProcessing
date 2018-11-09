@@ -12,9 +12,9 @@ def home():
     return render_template('signup_manager.html')
 
 
-@app.route('/upload')
-def upload_file():
-    return render_template('upload.html')
+#@app.route('/upload')
+#def upload_file():
+#   return render_template('upload.html')
 
 
 @app.route('/matchdocs')
@@ -22,8 +22,7 @@ def match_docs():
     return render_template('match_docs.html')
 
 
-
-
+'''
 @app.route('/uploader', methods=['GET', 'POST'])
 def upload_file3():
     if request.method == 'POST':
@@ -34,6 +33,7 @@ def upload_file3():
         os.rename(str(f1.filename), "file1.pdf")
         os.rename(str(f2.filename), "file2.pdf")
         return getMatchedArray()
+'''
 
 
 
@@ -61,7 +61,7 @@ def getMatchedArray():
     matchedWords = []
     list1,list2 = p1.createWordArray("file1.pdf","file2.pdf")
     matchedWords = p1.getMatchedWords(list1,list2)
-    return str(matchedWords)
+    return jsonify(matchedWords)
 
 if __name__ == '_main_':
     app.run()

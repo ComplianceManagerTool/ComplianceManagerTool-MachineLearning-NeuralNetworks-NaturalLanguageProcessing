@@ -64,7 +64,7 @@
 			<div class="wrap-login100">
             
                 <table id="t01">
-                    <tr item-width="30px;">
+                    <!--<tr item-width="30px;">
                       <th>Matched Word</th>
                       <th>Frequency in business glossary</th> 
                       <th>Frequency in regulatory document</th>
@@ -79,7 +79,7 @@
                       <td>Eve</td>
                       <td>20</td> 
                       <td>94</td>
-                    </tr>
+                    </tr>-->
                   </table>
                 <div class="container-login100-form-btn">
                     <button class="login100-form-btn">
@@ -130,8 +130,9 @@
 ];*/
 
 
-var arr = '{{ matchedWords }}';
+var arr = {{ matchedWords|safe }};
 console.log(arr);
+
     // Find a <table> element with id="myTable":
 var table = document.getElementById("t01");
 
@@ -148,8 +149,8 @@ for(var i=0; i<arr.length ; i++){
 
         // Add some text to the new cells:
         cell1.innerHTML = arr[i].Matchedword;
-        cell2.innerHTML = arr[i].count_in_bus;
-        cell3.innerHTML = arr[i].count_in_regulatory_doc;
+        cell2.innerHTML = arr[i]["count in business glossary"];
+        cell3.innerHTML = arr[i]["count in regulatory doc"];
 
 
 }
