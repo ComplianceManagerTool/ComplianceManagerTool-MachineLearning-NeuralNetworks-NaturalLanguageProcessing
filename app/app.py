@@ -59,6 +59,10 @@ def upload_file2():
         return render_template('matched_words.html',matchedWords=matchedWords)
         #return getMatchedArray()
         
+@app.route('/dashboard')
+def dashboard():
+    return render_template('dashboard.html')
+
 
 def getMatchedArray():
     matchedWords = []
