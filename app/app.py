@@ -4,6 +4,7 @@ import os
 #from flask_restful import Resource, Api
 from flask import jsonify
 import PdfToText_WordArray as p1
+import classifyRegulatoryDoc as cl_reg
 
 app = Flask(__name__)
 
@@ -61,7 +62,7 @@ def upload_file2():
         
 @app.route('/dashboard')
 def dashboard():
-    return render_template('dashboard.html')
+    return render_template('dashboard.html',classifiedText = cl_reg.classifiedText,count_texts=cl_reg.count_texts)
 
 
 def getMatchedArray():

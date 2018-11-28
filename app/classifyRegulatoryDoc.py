@@ -16,15 +16,19 @@ from sklearn.model_selection import train_test_split
 from sklearn.metrics import confusion_matrix
 from IPython.display import display
 from sklearn.feature_selection import chi2
+import data_processing as dp
 
 df = pd.read_csv("training data - Sheet1.csv") 
 df['category_id'] = df['category'].factorize()[0]
 category_id_df = df[['category', 'category_id']].drop_duplicates().sort_values('category_id')
 category_to_id = dict(category_id_df.values)
 id_to_category = dict(category_id_df[['category_id', 'category']].values)
-print(df.sample(5, random_state=0))
-print(df.groupby('category').text.count().plot.bar(ylim=0))
-
+#print(df.sample(5, random_state=0))
+#print(df.groupby('category').text.count().plot.bar(ylim=0))
+count_texts=[]
+for c in df.groupby('category').text.count():
+  count_texts.append(c)
+print(count_texts)
 tfidf = TfidfVectorizer(sublinear_tf=True, min_df=5, norm='l2', encoding='latin-1', ngram_range=(1, 2), stop_words='english')
 
 features = tfidf.fit_transform(df.text).toarray()
@@ -37,9 +41,9 @@ for category, category_id in sorted(category_to_id.items()):
   feature_names = np.array(tfidf.get_feature_names())[indices]
   unigrams = [v for v in feature_names if len(v.split(' ')) == 1]
   bigrams = [v for v in feature_names if len(v.split(' ')) == 2]
-  print("# '{}':".format(category))
-  print("  . Most correlated unigrams:\n       . {}".format('\n       . '.join(unigrams[-N:])))
-  print("  . Most correlated bigrams:\n       . {}".format('\n       . '.join(bigrams[-N:])))
+  #print("# '{}':".format(category))
+  #print("  . Most correlated unigrams:\n       . {}".format('\n       . '.join(unigrams[-N:])))
+  #print("  . Most correlated bigrams:\n       . {}".format('\n       . '.join(bigrams[-N:])))
 
 ### tf-idf feature vector for each paragraph text projected on 2 dimension ### 
 
@@ -75,7 +79,7 @@ sns.boxplot(x='model_name', y='accuracy', data=cv_df)
 sns.stripplot(x='model_name', y='accuracy', data=cv_df, 
               size=8, jitter=True, edgecolor="gray", linewidth=2)
 
-print(cv_df.groupby('model_name').accuracy.mean())
+#print(cv_df.groupby('model_name').accuracy.mean())
 
 ### splitting dataset into train and test data ###
 
@@ -98,9 +102,9 @@ plt.xlabel('Predicted')
 for predicted in category_id_df.category_id:
   for actual in category_id_df.category_id:
     if predicted != actual and conf_mat[actual, predicted] >= 2:
-      print("'{}' predicted as '{}' : {} examples.".format(id_to_category[actual], id_to_category[predicted], conf_mat[actual, predicted]))
+      #print("'{}' predicted as '{}' : {} examples.".format(id_to_category[actual], id_to_category[predicted], conf_mat[actual, predicted]))
       display(df.loc[indices_test[(y_test == actual) & (y_pred == predicted)]][['category', 'text']])
-      print('')
+      #print('')
 model.fit(features, labels)
 
 N = 5
@@ -109,37 +113,33 @@ for category, category_id in sorted(category_to_id.items()):
   feature_names = np.array(tfidf.get_feature_names())[indices]
   unigrams = [v for v in reversed(feature_names) if len(v.split(' ')) == 1][:N]
   bigrams = [v for v in reversed(feature_names) if len(v.split(' ')) == 2][:N]
-  print("# '{}':".format(category))
-  print("  . Top unigrams:\n       . {}".format('\n       . '.join(unigrams)))
-  print("  . Top bigrams:\n       . {}".format('\n       . '.join(bigrams)))
+  #print("# '{}':".format(category))
+  #print("  . Top unigrams:\n       . {}".format('\n       . '.join(unigrams)))
+  #print("  . Top bigrams:\n       . {}".format('\n       . '.join(bigrams)))
 
 
-print(df[df.text.str.lower().str.contains('business')].category.value_counts())
-
-with open("/home/akansha/Documents/295B/" + "CalRegulaory.pdf", "rb") as f1:
-        regulatoryDocText = pdftotext.PDF(f1)
-regulatoryDocString = "\n\n".join(regulatoryDocText).lower()
-#use four space as paragraph delimiter to convert the text into list of paragraphs.
-para = re.split('\s{4,}',regulatoryDocString)
-
-texts = []
-
-for p in range(200):
-  if not (para[p].isdigit() and para[p]==' '):
-     texts.append(para[p])
+#print(df[df.text.str.lower().str.contains('business')].category.value_counts())
 
 
-'''
-
-texts = ["Establishing rules, procedures, and any exceptions necessary to ensure that the notices and information that businesses are required to provide pursuant to this title are provided in a manner that may be easily understood by the average consumer, are accessible to consumers with disabilities, and are available in the language primarily used to interact with the consumer, including establishing rules and guidelines regarding financial incentive offerings, within one year of passage of this title and as needed thereafter.","The development and use of a recognizable and uniform opt-out logo or button by all businesses to promote consumer awareness of the opportunity to opt out of the sale of personal information."]
-
-'''
-text_features = tfidf.transform(texts)
+text_features = tfidf.transform(dp.texts)
 predictions = model.predict(text_features)
-for text, predicted in zip(texts, predictions):
+'''
+for text, predicted in zip(dp.texts, predictions):
   print('"{}"'.format(text))
   print("  - Predicted as: '{}'".format(id_to_category[predicted]))
   print("")
+
+'''
+classifiedText = {}
+list_text = []
+for text, predicted in zip(dp.texts, predictions):
+   category = id_to_category[predicted]
+   if classifiedText.get(category) != None:
+      list_text = classifiedText.get(category)
+      list_text.append(text)
+      classifiedText[category] = list_text
+   else:
+      classifiedText[category] = [text]
 
 
 

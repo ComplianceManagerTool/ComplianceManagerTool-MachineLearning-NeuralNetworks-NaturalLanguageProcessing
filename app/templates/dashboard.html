@@ -14,13 +14,39 @@
     <link href="../static/styles/mdb.min.css" rel="stylesheet">
     <!-- Your custom styles (optional) -->
     <link href="../static/styles/style.min.css" rel="stylesheet">
+
+    <script>
+        function onload(){ 
+        
+            var arr1 = {{ classifiedText |safe }};
+            for (var key in arr1){
+              
+              if(key=="Finance"){
+                document.getElementById("finance").value = arr1[key];
+              }
+              else if(key=="Marketing"){
+                document.getElementById("marketing").value = arr1[key];
+              }
+              else if(key=="Purchasing"){
+                document.getElementById("purchasing").value = arr1[key];
+              }
+              
+            }
+
+        }
+                        
+          </script>
+    
 </head>
 
-<body class="grey lighten-3">
+
+
+<body onload="onload();" class="grey lighten-3">
+    
 
     <!--Main Navigation-->
     <header>
-
+       
         <!-- Navbar -->
         <nav class="navbar fixed-top navbar-expand-lg navbar-light white scrolling-navbar">
             <div class="container-fluid">
@@ -124,9 +150,9 @@
                 <!--Grid column-->
                 <div class="col-md-9 mb-4">
                    <!--Text Boxes-->
-                   <div>
+                   <div>                       
                     <label for="title">Finance</label><br/>
-                    <textarea class="scrollabletextbox" name="note">
+                    <textarea id="finance" class="scrollabletextbox" name="note">                                                 
                         Hello
                       </textarea><br/>
                       <label for="title">HR</label><br/>
@@ -134,11 +160,11 @@
                         Hello
                       </textarea><br/>
                       <label for="title">Marketing</label><br/>
-                      <textarea class="scrollabletextbox" name="note">
+                      <textarea id = "marketing" class="scrollabletextbox" name="note">
                         Hello
                       </textarea><br/>
-                      <label for="title">Information Technology</label><br/>
-                      <textarea class="scrollabletextbox" name="note">
+                      <label for="title">Purchasing</label><br/>
+                      <textarea id = "purchasing" class="scrollabletextbox" name="note">
                         Hello
                       </textarea><br/>
                    </div>
@@ -1302,10 +1328,14 @@
         var myChart = new Chart(ctx, {
             type: 'bar',
             data: {
-                labels: ["Finance", "Production", "Human Resources", "Marketing", "Information Technology"],
+                //labels: ["Finance", "Production", "Human Resources", "Marketing", "Information Technology"],
+                labels: ["Finance", "Production", "Marketing"],
                 datasets: [{
                     label: 'Total Regulations',
-                    data: [12, 19, 3, 5, 2, 3],
+                    //data: [12, 19, 3, 5, 2, 3],
+                    //var countTexts = {{ count_texts|safe }}
+                    
+                    data: {{ count_texts }},
                     backgroundColor: [
                         'rgba(255, 99, 132, 0.2)',
                         'rgba(54, 162, 235, 0.2)',
