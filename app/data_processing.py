@@ -3,7 +3,7 @@ import pdftotext
 import numpy as np
 
 
-with open("/home/akansha/Documents/295B/" + "CalRegulaory.pdf", "rb") as f1:
+with open("/home/akansha/Documents/295B/ComplianceManagerTool-MachineLearning-NeuralNetworks-NaturalLanguageProcessing/app/" + "file2.pdf", "rb") as f1:
         regulatoryDocText = pdftotext.PDF(f1)
 regulatoryDocString = "\n\n".join(regulatoryDocText).lower()
 

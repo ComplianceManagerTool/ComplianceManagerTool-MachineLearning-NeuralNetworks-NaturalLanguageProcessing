@@ -49,7 +49,7 @@ def upload_file1():
         os.rename(str(f1.filename), "file1.pdf")
         return render_template('match_docs.html')
 
-@app.route('/uploader2', methods=['GET', 'POST'])
+@app.route('/taxonomy', methods=['GET', 'POST'])
 def upload_file2():
     if request.method == 'POST':
         f2 = request.files['file2']
