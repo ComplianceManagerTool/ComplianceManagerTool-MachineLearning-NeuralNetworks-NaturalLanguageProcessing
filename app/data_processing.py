@@ -3,8 +3,7 @@ import pdftotext
 import numpy as np
 
 def split_para(file):
-    print("reached dp")
-    with open("/home/akansha/Documents/295B/ComplianceManagerTool-MachineLearning-NeuralNetworks-NaturalLanguageProcessing/app/" + file, "rb") as f1:
+    with open(file, "rb") as f1:
           regulatoryDocText = pdftotext.PDF(f1)
     regulatoryDocString = "\n\n".join(regulatoryDocText).lower()
     para = re.split('\n{2,}',regulatoryDocString)

@@ -6,9 +6,9 @@ vocab1 = {}
 
 def createWordArray(file1,file2):
     # Load your PDF
-    with open("/home/akansha/Documents/295B/ComplianceManagerTool-MachineLearning-NeuralNetworks-NaturalLanguageProcessing/app/" + file1, "rb") as f1:
+    with open(file1, "rb") as f1:
         businessGlossaryPdf = pdftotext.PDF(f1)
-    with open("/home/akansha/Documents/295B/ComplianceManagerTool-MachineLearning-NeuralNetworks-NaturalLanguageProcessing/app/" + file2, "rb") as f2:
+    with open(file2, "rb") as f2:
         regulatoryDocPdf = pdftotext.PDF(f2)
     # Read all the text into one string
     businessGlossaryString = "".join(businessGlossaryPdf).lower() 

@@ -136,16 +136,7 @@ def classifyRegDoc(file):
             classifiedText[category] = [text]
     return classifiedText
 
-'''
-for text, predicted in zip(dp.texts, predictions):
-  print('"{}"'.format(text))
-  print("  - Predicted as: '{}'".format(id_to_category[predicted]))
-  print("")
-'''
 
-
-
-#print(classifiedText)
 
 
 
