@@ -60,9 +60,11 @@ def upload_file2():
         return render_template('matched_words.html',matchedWords=matchedWords)
         #return getMatchedArray()
         
-@app.route('/dashboard')
+@app.route('/dashboard',methods=['GET'])
 def dashboard():
-    return render_template('dashboard.html',classifiedText = cl_reg.classifiedText,count_texts=cl_reg.count_texts)
+    if request.method == 'GET':
+        classifiedText = cl_reg.classifyRegDoc("file2.pdf")
+        return render_template('dashboard.html',classifiedText = classifiedText,count_texts=cl_reg.count_texts)
 
 
 def getMatchedArray():

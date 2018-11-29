@@ -30,6 +30,10 @@
               else if(key=="Purchasing"){
                 document.getElementById("purchasing").value = arr1[key];
               }
+
+              else if(key=="HR"){
+                document.getElementById("hr").value = arr1[key];
+              }
               
             }
 
@@ -162,16 +166,16 @@
                     <textarea id="finance" class="scrollabletextbox" name="note">                                                 
                         
                       </textarea><br/>
-                      <label for="title">HR</label><br/>
-                      <textarea class="scrollabletextbox" name="note">
+                      <label for="title">Purchasing</label><br/>
+                      <textarea id = "purchasing" class="scrollabletextbox" name="note">
                         Hello
                       </textarea><br/>
                       <label for="title">Marketing</label><br/>
                       <textarea id = "marketing" class="scrollabletextbox" name="note">
                         
                       </textarea><br/>
-                      <label for="title">Purchasing</label><br/>
-                      <textarea id = "purchasing" class="scrollabletextbox" name="note">                        
+                      <label for="title">HR</label><br/>
+                      <textarea id = "hr" class="scrollabletextbox" name="note">                        
                       </textarea><br/>
                    </div>
 
@@ -1340,7 +1344,7 @@
             type: 'bar',
             data: {
                 //labels: ["Finance", "Production", "Human Resources", "Marketing", "Information Technology"],
-                labels: ["Finance", "Production", "Marketing"],
+                labels: ["Finance", "Purchasing", "Marketing","HR"],
                 datasets: [{
                     label: 'Total Regulations',
                     //data: [12, 19, 3, 5, 2, 3],

@@ -18,7 +18,7 @@ from IPython.display import display
 from sklearn.feature_selection import chi2
 import data_processing as dp
 
-df = pd.read_csv("training data - Sheet1.csv") 
+df = pd.read_csv("training_data - Sheet1.csv") 
 df['category_id'] = df['category'].factorize()[0]
 category_id_df = df[['category', 'category_id']].drop_duplicates().sort_values('category_id')
 category_to_id = dict(category_id_df.values)
@@ -28,7 +28,7 @@ id_to_category = dict(category_id_df[['category_id', 'category']].values)
 count_texts=[]
 for c in df.groupby('category').text.count():
   count_texts.append(c)
-print(count_texts)
+#print(count_texts)
 tfidf = TfidfVectorizer(sublinear_tf=True, min_df=5, norm='l2', encoding='latin-1', ngram_range=(1, 2), stop_words='english')
 
 features = tfidf.fit_transform(df.text).toarray()
@@ -79,7 +79,7 @@ sns.boxplot(x='model_name', y='accuracy', data=cv_df)
 sns.stripplot(x='model_name', y='accuracy', data=cv_df, 
               size=8, jitter=True, edgecolor="gray", linewidth=2)
 
-#print(cv_df.groupby('model_name').accuracy.mean())
+print(cv_df.groupby('model_name').accuracy.mean())
 
 ### splitting dataset into train and test data ###
 
@@ -98,13 +98,13 @@ plt.ylabel('Actual')
 plt.xlabel('Predicted')
 
 ######
-
+'''
 for predicted in category_id_df.category_id:
   for actual in category_id_df.category_id:
     if predicted != actual and conf_mat[actual, predicted] >= 2:
       #print("'{}' predicted as '{}' : {} examples.".format(id_to_category[actual], id_to_category[predicted], conf_mat[actual, predicted]))
       display(df.loc[indices_test[(y_test == actual) & (y_pred == predicted)]][['category', 'text']])
-      #print('')
+      #print('')'''
 model.fit(features, labels)
 
 N = 5
@@ -119,29 +119,33 @@ for category, category_id in sorted(category_to_id.items()):
 
 
 #print(df[df.text.str.lower().str.contains('business')].category.value_counts())
+def classifyRegDoc(file):
+    print(file)
+    texts = dp.split_para(file)
+    text_features = tfidf.transform(texts)
+    predictions = model.predict(text_features)
+    classifiedText = {}
+    list_text = []
+    for text, predicted in zip(texts, predictions):
+         category = id_to_category[predicted]
+         if classifiedText.get(category) != None:
+            list_text = classifiedText.get(category)
+            list_text.append(text)
+            classifiedText[category] = list_text
+         else:
+            classifiedText[category] = [text]
+    return classifiedText
 
-
-text_features = tfidf.transform(dp.texts)
-predictions = model.predict(text_features)
 '''
 for text, predicted in zip(dp.texts, predictions):
   print('"{}"'.format(text))
   print("  - Predicted as: '{}'".format(id_to_category[predicted]))
   print("")
-
 '''
-classifiedText = {}
-list_text = []
-for text, predicted in zip(dp.texts, predictions):
-   category = id_to_category[predicted]
-   if classifiedText.get(category) != None:
-      list_text = classifiedText.get(category)
-      list_text.append(text)
-      classifiedText[category] = list_text
-   else:
-      classifiedText[category] = [text]
 
 
+
+#print(classifiedText)
 
 
 
