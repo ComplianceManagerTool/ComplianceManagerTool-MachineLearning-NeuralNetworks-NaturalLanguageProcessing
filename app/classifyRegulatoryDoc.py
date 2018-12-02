@@ -119,24 +119,30 @@ for category, category_id in sorted(category_to_id.items()):
 
 
 #print(df[df.text.str.lower().str.contains('business')].category.value_counts())
-def classifyRegDoc(file):
-    print(file)
-    texts = dp.split_para(file)
-    text_features = tfidf.transform(texts)
-    predictions = model.predict(text_features)
-    classifiedText = {}
-    list_text = []
-    for text, predicted in zip(texts, predictions):
-         category = id_to_category[predicted]
-         if classifiedText.get(category) != None:
-            list_text = classifiedText.get(category)
-            list_text.append(text)
-            classifiedText[category] = list_text
-         else:
-            classifiedText[category] = [text]
-    return classifiedText
 
 
+text_features = tfidf.transform(dp.texts)
+predictions = model.predict(text_features)
+'''
+for text, predicted in zip(dp.texts, predictions):
+  print('"{}"'.format(text))
+  print("  - Predicted as: '{}'".format(id_to_category[predicted]))
+  print("")
+'''
+
+classifiedText = {}
+list_text = []
+for text, predicted in zip(dp.texts, predictions):
+   category = id_to_category[predicted]
+   print(category)
+   if classifiedText.get(category) != None:
+      list_text = classifiedText.get(category)
+      list_text.append(text)
+      classifiedText[category] = list_text
+   else:
+      classifiedText[category] = [text]
+
+#print(classifiedText)
 
 
 
