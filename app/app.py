@@ -5,6 +5,7 @@ import os
 from flask import jsonify
 import PdfToText_WordArray as p1
 import classifyRegulatoryDoc as cl_reg
+from flask import request
 
 app = Flask(__name__)
 
@@ -16,9 +17,15 @@ def home():
 def signup():
     return render_template('signup_manager.html')
 
-#@app.route('/upload')
-#def upload_file():
-#   return render_template('upload.html')
+@app.route('/uploaderabhi', methods=['POST'])
+def formdata():
+        print(request.form['firstname'])
+        print(request.form['lastname'])
+        print(request.form['email'])
+        #print(request.form['email'])
+        return "Done"
+
+   
 
 
 @app.route('/matchdocs')
