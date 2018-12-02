@@ -25,6 +25,18 @@ def signup():
 def match_docs():
     return render_template('match_docs.html')
 
+@app.route('/about')
+def about():
+    return render_template('./about/about.html')
+
+@app.route('/contact')
+def contact():
+    return render_template('contact.html')
+
+@app.route('/team')
+def team():
+    return render_template('team.html')
+
 
 '''
 @app.route('/uploader', methods=['GET', 'POST'])
@@ -53,6 +65,8 @@ def add_header(r):
     r.headers["Expires"] = "0"
     r.headers['Cache-Control'] = 'public, max-age=0'
     return r
+
+
 
 @app.route('/uploader1', methods=['GET', 'POST'])
 def upload_file1():
