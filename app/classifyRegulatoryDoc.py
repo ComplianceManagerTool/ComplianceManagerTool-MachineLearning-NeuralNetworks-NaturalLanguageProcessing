@@ -6,6 +6,8 @@ import pandas as pd
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.feature_selection import chi2
 from sklearn.manifold import TSNE
+import matplotlib
+matplotlib.use('PS')
 import matplotlib.pyplot as plt
 from sklearn.linear_model import LogisticRegression
 from sklearn.ensemble import RandomForestClassifier
@@ -18,7 +20,9 @@ from IPython.display import display
 from sklearn.feature_selection import chi2
 import data_processing as dp
 
-df = pd.read_csv("training_data - Sheet1.csv") 
+
+
+df = pd.read_csv("training_data - Sheet1.csv")
 df['category_id'] = df['category'].factorize()[0]
 category_id_df = df[['category', 'category_id']].drop_duplicates().sort_values('category_id')
 category_to_id = dict(category_id_df.values)
@@ -45,7 +49,7 @@ for category, category_id in sorted(category_to_id.items()):
   #print("  . Most correlated unigrams:\n       . {}".format('\n       . '.join(unigrams[-N:])))
   #print("  . Most correlated bigrams:\n       . {}".format('\n       . '.join(bigrams[-N:])))
 
-### tf-idf feature vector for each paragraph text projected on 2 dimension ### 
+### tf-idf feature vector for each paragraph text projected on 2 dimension ###
 
 SAMPLE_SIZE = int(len(features) * 0.3)
 np.random.seed(0)
@@ -76,7 +80,7 @@ for model in models:
 cv_df = pd.DataFrame(entries, columns=['model_name', 'fold_idx', 'accuracy'])
 
 sns.boxplot(x='model_name', y='accuracy', data=cv_df)
-sns.stripplot(x='model_name', y='accuracy', data=cv_df, 
+sns.stripplot(x='model_name', y='accuracy', data=cv_df,
               size=8, jitter=True, edgecolor="gray", linewidth=2)
 
 print(cv_df.groupby('model_name').accuracy.mean())
@@ -89,7 +93,7 @@ X_train, X_test, y_train, y_test, indices_train, indices_test = train_test_split
 model.fit(X_train, y_train)
 y_pred_proba = model.predict_proba(X_test)
 y_pred = model.predict(X_test)
-
+'''
 ######
 conf_mat = confusion_matrix(y_test, y_pred)
 sns.heatmap(conf_mat, annot=True, fmt='d',
@@ -98,7 +102,7 @@ plt.ylabel('Actual')
 plt.xlabel('Predicted')
 
 ######
-'''
+
 for predicted in category_id_df.category_id:
   for actual in category_id_df.category_id:
     if predicted != actual and conf_mat[actual, predicted] >= 2:
@@ -121,28 +125,20 @@ for category, category_id in sorted(category_to_id.items()):
 #print(df[df.text.str.lower().str.contains('business')].category.value_counts())
 
 
-text_features = tfidf.transform(dp.texts)
-predictions = model.predict(text_features)
-'''
-for text, predicted in zip(dp.texts, predictions):
-  print('"{}"'.format(text))
-  print("  - Predicted as: '{}'".format(id_to_category[predicted]))
-  print("")
-'''
-
-classifiedText = {}
-list_text = []
-for text, predicted in zip(dp.texts, predictions):
-   category = id_to_category[predicted]
-   print(category)
-   if classifiedText.get(category) != None:
-      list_text = classifiedText.get(category)
-      list_text.append(text)
-      classifiedText[category] = list_text
-   else:
-      classifiedText[category] = [text]
-
-#print(classifiedText)
-
-
+def classifyRegDoc(file):
+    print(file)
+    texts = dp.split_para(file)
+    text_features = tfidf.transform(texts)
+    predictions = model.predict(text_features)
+    classifiedText = {}
+    list_text = []
+    for text, predicted in zip(texts, predictions):
+         category = id_to_category[predicted]
+         if classifiedText.get(category) != None:
+            list_text = classifiedText.get(category)
+            list_text.append(text)
+            classifiedText[category] = list_text
+         else:
+            classifiedText[category] = [text]
+    return classifiedText
 
