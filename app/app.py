@@ -44,6 +44,10 @@ class SignupForm(Form):
 def signup():
     form = SignupForm(request.form)
     print("HeloEntry")
+
+    if request.method == 'GET':
+            return render_template('./signup_manager.html')
+
     if request.method == 'POST':
         if form.validate():
             first_name = form.first_name.data
