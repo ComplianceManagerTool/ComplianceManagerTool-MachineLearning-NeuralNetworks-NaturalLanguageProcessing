@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<title>Login V1</title>
+	<title>CMT</title>
     <meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 <!--===============================================================================================-->	
@@ -22,6 +22,16 @@
 	<link rel="stylesheet" type="text/css" href="../static/styles/main.css">
 <!--===============================================================================================-->
 
+
+ <!-- Font Awesome -->
+ <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+ <!-- Bootstrap core CSS -->
+ <link href="../static/styles/bootstrap.min.css" rel="stylesheet">
+ <!-- Material Design Bootstrap -->
+ <link href="../static/styles/mdb.min.css" rel="stylesheet">
+ <!-- Your custom styles (optional) -->
+ <link href="../static/styles/style.min.css" rel="stylesheet">
+
 	<link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" rel="stylesheet" id="bootstrap-css">
 	<script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
 	<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
@@ -32,12 +42,12 @@
         width:100%;
     }
     table, th, td {
-        border: 1px solid rgb(11, 175, 60);
         border-collapse: collapse;
+        border: 1px solid lightblue;
     }
     th, td {
         padding: 15px;
-        text-align: left;
+        text-align: center;
     }
     table#t01 tr:nth-child(even) {
         background-color: #eee;
@@ -46,32 +56,42 @@
        background-color: #fff;
     }
     table#t01 th {
-        background-color: rgb(18, 194, 56);
-        color: white;
+        background-color: #007bff;
+    color: white;
     }
-
-    table, th, td {
-    border: 1px solid rgb(211, 22, 186);
-}
     </style>
 
 
 
+
 <body>
-	
+	 <!-- Sidebar -->
+	 <div class="sidebar-fixed position-fixed">
+
+		<a class="logo-wrapper waves-effect">
+			<img src="https://vignette.wikia.nocookie.net/logosfake/images/b/b3/CMT_Logo.png/revision/latest?cb=20161023201954" class="img-fluid" alt="">
+		</a>
+
+		<div class="list-group list-group-flush">
+			<a href="/dashboard" class="list-group-item active waves-effect">
+				<i class="fa fa-pie-chart mr-3"></i>Dashboard</a>
+			<a href="#" class="list-group-item list-group-item-action waves-effect">
+				<i class="fa fa-user mr-3"></i>Profile</a>
+			<a href="#" class="list-group-item list-group-item-action waves-effect">
+				<i class="fa fa-table mr-3"></i>Tables</a>
+		</div>
+
+	</div>
+	<!-- Sidebar -->	
 	<div class="limiter">
 		<div class="container-login100">
 			<div class="wrap-login100">
-                <!--<a href="/dashboard">Visit Dashboard</a>-->
-                <form enctype = "multipart/form-data"
-                     action = "/dashboard" method = "get">
-                     <button type = "submit" class="login100-form-btn">
-                        Dashboard
-                    </button>
-                    </form>
-                <div style="margin-bottom: 5%">
-                    
-                    <h1> Words matched between compliance document and business glossary</h1>
+               
+                <div>
+                    <span class="login100-form-title">
+                        <br> <br>
+						Words matched between compliance document and business glossary
+					</span>
 
                 </div>
             
@@ -81,23 +101,8 @@
                       <th>Frequency in business glossary</th> 
                       <th>Frequency in regulatory document</th>
                     </tr>
-                    <!--<tr></tr>
-                    <tr>
-                      <td>Jill</td>
-                      <td>20</td> 
-                      <td>50</td>
-                    </tr>
-                    <tr>
-                      <td>Eve</td>
-                      <td>20</td> 
-                      <td>94</td>
-                    </tr>-->
                   </table>
-                <div class="container-login100-form-btn">
-                    <button class="login100-form-btn">
-                        Match regulatory document with business glossary
-                    </button>
-                </div>
+    
             <br>
             </div>
            
@@ -105,41 +110,9 @@
 	</div>
 </div>
 					
-					
-
-				
-				</form>
-			</div>
-		</div>
-	</div>
+		
 	
 	<script>
-    //     function createTable(tableData) {
-    //   var table = document.getElementById('t01');
-    //   var tableBody = document.createElement('tbody');
-    
-    //   tableData.forEach(function(rowData) {
-    //     var row = document.createElement('tr');
-    
-    //     rowData.forEach(function(cellData) {
-    //       var cell = document.createElement('td');
-    //       cell.appendChild(document.createTextNode(cellData));
-    //       row.appendChild(cell);
-    //     });
-    
-    //     tableBody.appendChild(row);
-    //   });
-    
-    //   table.appendChild(tableBody);
-    //   document.body.appendChild(table);
-    // }
-    
-    // createTable([["row 1, cell 1", "row 1, cell 2","dfd"], ["row 2, cell 1", "row 2, cell 2","sdfds"]]);
-/*var arr = [
-    {"Matchedword":'0gggg00', "count_in_bus":'25', "count_in_regulatory_doc":'3'},
-    {Matchedword:'000', "count_in_bus":'25', count_in_regulatory_doc:'3'}
-
-];*/
 
 
 var arr = {{ matchedWords|safe }};

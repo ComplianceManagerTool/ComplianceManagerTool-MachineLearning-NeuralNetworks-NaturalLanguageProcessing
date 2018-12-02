@@ -93,7 +93,7 @@ X_train, X_test, y_train, y_test, indices_train, indices_test = train_test_split
 model.fit(X_train, y_train)
 y_pred_proba = model.predict_proba(X_test)
 y_pred = model.predict(X_test)
-
+'''
 ######
 conf_mat = confusion_matrix(y_test, y_pred)
 sns.heatmap(conf_mat, annot=True, fmt='d',
@@ -102,7 +102,7 @@ plt.ylabel('Actual')
 plt.xlabel('Predicted')
 
 ######
-'''
+
 for predicted in category_id_df.category_id:
   for actual in category_id_df.category_id:
     if predicted != actual and conf_mat[actual, predicted] >= 2:
@@ -123,6 +123,8 @@ for category, category_id in sorted(category_to_id.items()):
 
 
 #print(df[df.text.str.lower().str.contains('business')].category.value_counts())
+
+
 def classifyRegDoc(file):
     print(file)
     texts = dp.split_para(file)
@@ -139,3 +141,4 @@ def classifyRegDoc(file):
          else:
             classifiedText[category] = [text]
     return classifiedText
+

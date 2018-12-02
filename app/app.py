@@ -48,6 +48,19 @@ def upload_file3():
 
 
 
+# prevent cached responses
+@app.after_request
+def add_header(r):
+    """
+    Add headers to both force latest IE rendering engine or Chrome Frame,
+    and also to cache the rendered page for 10 minutes.
+    """
+    r.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
+    r.headers["Pragma"] = "no-cache"
+    r.headers["Expires"] = "0"
+    r.headers['Cache-Control'] = 'public, max-age=0'
+    return r
+
 @app.route('/uploader1', methods=['GET', 'POST'])
 def upload_file1():
     if request.method == 'POST':
@@ -81,4 +94,4 @@ def getMatchedArray():
     return jsonify(matchedWords)
 
 if __name__ == '_main_':
-    app.run()
+    app.run(debug=True)
