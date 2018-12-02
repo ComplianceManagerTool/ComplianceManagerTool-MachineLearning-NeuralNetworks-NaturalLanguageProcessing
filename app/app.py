@@ -1,5 +1,11 @@
-from flask import Flask, request,render_template
+from flask import Flask, request, render_template, flash, redirect, url_for, session, logging
 from werkzeug.utils import secure_filename
+from flask_mysqldb import MySQL
+from flask_api import status
+from wtforms import Form, StringField, TextAreaField, PasswordField, validators
+from wtforms_components import IntegerField
+from passlib.hash import sha256_crypt
+
 import os
 #from flask_restful import Resource, Api
 from flask import jsonify
@@ -8,14 +14,66 @@ import classifyRegulatoryDoc as cl_reg
 from flask import request
 
 app = Flask(__name__)
+app.secret_key = 'super secret key'
+
+app.config['MYSQL_HOST'] = 'localhost'
+app.config['MYSQL_USER'] = 'root'
+app.config['MYSQL_PASSWORD'] = 'root'
+app.config['MYSQL_DB'] = 'cmpe295b'
+app.config['MYSQL_CURSORCLASS'] = 'DictCursor'
+
+mysql = MySQL(app)
 
 @app.route('/')
 def home():
     return render_template('login.html')
 
-@app.route('/signup')
+class SignupForm(Form):
+    first_name = StringField('first_name', [validators.length(min = 1, max = 50)])
+    last_name = StringField('last_name', [validators.length(min = 1, max = 50)])
+    email = StringField('email', [validators.length(min = 4, max = 50)])
+    password = PasswordField('password', [validators.DataRequired(), validators.EqualTo('confirm', message = 'Passwords do not match')])
+    confirm = PasswordField('Confirm Password')
+    phone = IntegerField('phone')
+    organization_address = StringField('organization_address', [validators.length(min = 5, max = 100)])
+    organization_name = StringField('organization_name', [validators.length(min = 1, max = 100)])
+    department_name = StringField('department_name', [validators.length(min = 1, max = 100)])
+
+
+@app.route('/signup', methods=['GET', 'POST'])
 def signup():
-    return render_template('signup_manager.html')
+    form = SignupForm(request.form)
+    print("HeloEntry")
+    if request.method == 'POST':
+        if form.validate():
+            first_name = form.first_name.data
+            last_name = form.last_name.data
+            email = form.email.data
+            password = sha256_crypt.encrypt(str(form.password.data))
+            phone = form.phone.data
+            organization_address = form.organization_address.data
+            organization_name = form.organization_name.data
+            department_name = form.department_name.data
+
+            print("Helo")
+
+            cur = mysql.connection.cursor()
+            
+            #Executes the SQL query
+            cur.execute("INSERT INTO users(first_name, last_name, email, password, phone, organization_address, organization_name, department_name) VALUES(%s, %s, %s, %s, %s, %s, %s, %s)", (first_name, last_name, email, password, phone, organization_address, organization_name, department_name))
+            mysql.connection.commit()
+            cur.close()
+
+            flash('You are now registered and can log in', 'success')
+
+            #Redirect url after registration to login
+            #redirect(url_for('login'))
+
+            return 'success', status.HTTP_200_OK
+        else:
+            return "Invalid data"
+    else:
+        return "Invalid request method"
 
 @app.route('/uploaderabhi', methods=['POST'])
 def formdata():
