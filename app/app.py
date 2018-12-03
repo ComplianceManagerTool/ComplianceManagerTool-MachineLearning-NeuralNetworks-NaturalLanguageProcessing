@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 from flask import Flask, request, render_template, flash, redirect, url_for, session, logging
 from werkzeug.utils import secure_filename
 from flask_mysqldb import MySQL
@@ -43,7 +44,7 @@ class SignupForm(Form):
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
     form = SignupForm(request.form)
-    print("HeloEntry")
+    print("HelloEntry")
 
     if request.method == 'GET':
             return render_template('./signup_manager.html')
@@ -59,7 +60,7 @@ def signup():
             organization_name = form.organization_name.data
             department_name = form.department_name.data
 
-            print("Helo")
+            print("Hello")
 
             cur = mysql.connection.cursor()
             
@@ -73,11 +74,59 @@ def signup():
             #Redirect url after registration to login
             #redirect(url_for('login'))
 
-            return 'success', status.HTTP_200_OK
+            return redirect(url_for('home'))
         else:
             return "Invalid data"
     else:
         return "Invalid request method"
+
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    print("HelloEntry")
+    print(request.method)
+    if request.method == "POST":
+        print("here")
+        print(request.form['email'])
+        print("here2")
+        email = request.form['email']
+        print("here3")
+        password_user = request.form['password_user']
+        print("here4")
+
+        cur = mysql.connection.cursor()
+        result = cur.execute("SELECT * FROM users WHERE email = %s", [email])
+
+        print("Hello")
+
+        if(result > 0):
+            data = cur.fetchone()
+            password = data['password']
+
+            if sha256_crypt.verify(password_user, password):
+                app.logger.info('PASSWORD MATCHED')
+                
+                session['logged_in'] = True
+                session['email'] = email
+                return "Success! You're now logged in."
+            else:
+                error = "Invalid login."
+                app.logger.info('PASSWORD IS INCORRECT')
+                return "Invalid login", status.HTTP_401_UNAUTHORIZED
+
+        else:
+            error = "Username not found"
+            return render_template('login.html', error=error)
+        cur.close()
+
+    return "OK", status.HTTP_200_OK
+
+
+@app.route('/logout', methods=['POST'])
+def logout():
+    session.clear()
+    flash('You are now logged out', 'success')
+    return "Success! You are now logged out", status.HTTP_200_OK
 
 @app.route('/uploaderabhi', methods=['POST'])
 def formdata():
