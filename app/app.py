@@ -30,19 +30,19 @@ def home():
     return render_template('login.html')
 
 @app.route('/finance')
-def home():
+def finance():
     return render_template('finance.html')
 
 @app.route('/hr')
-def home():
+def hr():
     return render_template('HR.html')
 
 @app.route('/marketing')
-def home():
+def marketing():
     return render_template('marketing.html')
 
 @app.route('/purchasing')
-def home():
+def purchasing():
     return render_template('purchading.html')
 
 class SignupForm(Form):
@@ -170,22 +170,6 @@ def contact():
 @app.route('/team')
 def team():
     return render_template('team.html')
-
-
-'''
-@app.route('/uploader', methods=['GET', 'POST'])
-def upload_file3():
-    if request.method == 'POST':
-        f1 = request.files['file1']
-        f2 = request.files['file2']
-        f1.save(secure_filename(f1.filename))
-        f2.save(secure_filename(f2.filename))
-        os.rename(str(f1.filename), "file1.pdf")
-        os.rename(str(f2.filename), "file2.pdf")
-        return getMatchedArray()
-'''
-
-
 
 # prevent cached responses
 @app.after_request
