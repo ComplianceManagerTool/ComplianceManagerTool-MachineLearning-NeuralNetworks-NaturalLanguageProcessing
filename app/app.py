@@ -30,20 +30,20 @@ def home():
     return render_template('login.html')
 
 @app.route('/finance')
-def home():
+def finance():
     return render_template('finance.html')
 
 @app.route('/hr')
-def home():
+def hr():
     return render_template('HR.html')
 
 @app.route('/marketing')
-def home():
+def marketing():
     return render_template('marketing.html')
 
 @app.route('/purchasing')
-def home():
-    return render_template('purchading.html')
+def purchasing():
+    return render_template('purchasing.html')
 
 class SignupForm(Form):
     first_name = StringField('first_name', [validators.length(min = 1, max = 50)])
