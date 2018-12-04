@@ -29,6 +29,22 @@ mysql = MySQL(app)
 def home():
     return render_template('login.html')
 
+@app.route('/finance')
+def home():
+    return render_template('finance.html')
+
+@app.route('/hr')
+def home():
+    return render_template('HR.html')
+
+@app.route('/marketing')
+def home():
+    return render_template('marketing.html')
+
+@app.route('/purchasing')
+def home():
+    return render_template('purchading.html')
+
 class SignupForm(Form):
     first_name = StringField('first_name', [validators.length(min = 1, max = 50)])
     last_name = StringField('last_name', [validators.length(min = 1, max = 50)])
