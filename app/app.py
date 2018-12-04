@@ -1,24 +1,142 @@
-from flask import Flask, request,render_template
+#!/usr/bin/python3
+from flask import Flask, request, render_template, flash, redirect, url_for, session, logging
 from werkzeug.utils import secure_filename
+from flask_mysqldb import MySQL
+from flask_api import status
+from wtforms import Form, StringField, TextAreaField, PasswordField, validators
+from wtforms_components import IntegerField
+from passlib.hash import sha256_crypt
+
 import os
 #from flask_restful import Resource, Api
 from flask import jsonify
 import PdfToText_WordArray as p1
 import classifyRegulatoryDoc as cl_reg
+from flask import request
 
 app = Flask(__name__)
+app.secret_key = 'super secret key'
+
+app.config['MYSQL_HOST'] = 'localhost'
+app.config['MYSQL_USER'] = 'root'
+app.config['MYSQL_PASSWORD'] = 'root'
+app.config['MYSQL_DB'] = 'cmpe295b'
+app.config['MYSQL_CURSORCLASS'] = 'DictCursor'
+
+mysql = MySQL(app)
 
 @app.route('/')
 def home():
     return render_template('login.html')
 
-@app.route('/signup')
-def signup():
-    return render_template('signup_manager.html')
+class SignupForm(Form):
+    first_name = StringField('first_name', [validators.length(min = 1, max = 50)])
+    last_name = StringField('last_name', [validators.length(min = 1, max = 50)])
+    email = StringField('email', [validators.length(min = 4, max = 50)])
+    password = PasswordField('password', [validators.DataRequired(), validators.EqualTo('confirm', message = 'Passwords do not match')])
+    confirm = PasswordField('Confirm Password')
+    phone = IntegerField('phone')
+    organization_address = StringField('organization_address', [validators.length(min = 5, max = 100)])
+    organization_name = StringField('organization_name', [validators.length(min = 1, max = 100)])
+    department_name = StringField('department_name', [validators.length(min = 1, max = 100)])
 
-#@app.route('/upload')
-#def upload_file():
-#   return render_template('upload.html')
+
+@app.route('/signup', methods=['GET', 'POST'])
+def signup():
+    form = SignupForm(request.form)
+    print("HelloEntry")
+
+    if request.method == 'GET':
+            return render_template('./signup_manager.html')
+
+    if request.method == 'POST':
+        if form.validate():
+            first_name = form.first_name.data
+            last_name = form.last_name.data
+            email = form.email.data
+            password = sha256_crypt.encrypt(str(form.password.data))
+            phone = form.phone.data
+            organization_address = form.organization_address.data
+            organization_name = form.organization_name.data
+            department_name = form.department_name.data
+
+            print("Hello")
+
+            cur = mysql.connection.cursor()
+            
+            #Executes the SQL query
+            cur.execute("INSERT INTO users(first_name, last_name, email, password, phone, organization_address, organization_name, department_name) VALUES(%s, %s, %s, %s, %s, %s, %s, %s)", (first_name, last_name, email, password, phone, organization_address, organization_name, department_name))
+            mysql.connection.commit()
+            cur.close()
+
+            flash('You are now registered and can log in', 'success')
+
+            #Redirect url after registration to login
+            #redirect(url_for('login'))
+
+            return redirect(url_for('home'))
+        else:
+            return "Invalid data"
+    else:
+        return "Invalid request method"
+
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    print("HelloEntry")
+    print(request.method)
+    if request.method == "POST":
+        print("here")
+        print(request.form['email'])
+        print("here2")
+        email = request.form['email']
+        print("here3")
+        password_user = request.form['password_user']
+        print("here4")
+
+        cur = mysql.connection.cursor()
+        result = cur.execute("SELECT * FROM users WHERE email = %s", [email])
+
+        print("Hello")
+
+        if(result > 0):
+            data = cur.fetchone()
+            password = data['password']
+
+            if sha256_crypt.verify(password_user, password):
+                app.logger.info('PASSWORD MATCHED')
+                
+                session['logged_in'] = True
+                session['email'] = email
+                return "Success! You're now logged in."
+            else:
+                error = "Invalid login."
+                app.logger.info('PASSWORD IS INCORRECT')
+                return "Invalid login", status.HTTP_401_UNAUTHORIZED
+
+        else:
+            error = "Username not found"
+            return render_template('login.html', error=error)
+        cur.close()
+
+    return "OK", status.HTTP_200_OK
+
+
+@app.route('/logout', methods=['POST'])
+def logout():
+    session.clear()
+    flash('You are now logged out', 'success')
+    return "Success! You are now logged out", status.HTTP_200_OK
+
+@app.route('/uploaderabhi', methods=['POST'])
+def formdata():
+        print(request.form['firstname'])
+        print(request.form['lastname'])
+        print(request.form['email'])
+        #print(request.form['email'])
+        return "Done"
+
+   
 
 
 @app.route('/matchdocs')

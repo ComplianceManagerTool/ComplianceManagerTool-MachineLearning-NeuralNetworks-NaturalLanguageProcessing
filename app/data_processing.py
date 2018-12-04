@@ -3,6 +3,7 @@ import pdftotext
 import numpy as np
 
 def split_para(file):
+    print("reached dp")
     with open(file, "rb") as f1:
           regulatoryDocText = pdftotext.PDF(f1)
     regulatoryDocString = "\n\n".join(regulatoryDocText).lower()

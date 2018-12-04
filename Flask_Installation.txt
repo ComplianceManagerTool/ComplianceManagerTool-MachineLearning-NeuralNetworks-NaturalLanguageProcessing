@@ -1,0 +1,7 @@
+Steps to install Flask:
+1. pip install virtualenv
+2. pip install Flask
+3. brew install pkg-config poppler
+4. pip install pdftotext
+5. pip install numpy
+6. pip install sklearn
