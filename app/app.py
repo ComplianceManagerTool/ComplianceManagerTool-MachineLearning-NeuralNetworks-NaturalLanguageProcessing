@@ -202,19 +202,18 @@ def add_header(r):
 
 
 
-@app.route('/uploader1', methods=['GET', 'POST'])
-def upload_file1():
-    if request.method == 'POST':
-        f1 = request.files['file1']
-        f1.save(secure_filename(f1.filename))
-        os.rename(str(f1.filename), "file1.pdf")
+@app.route('/upload', methods=['GET', 'POST'])
+def upload_files():
         return render_template('match_docs.html')
 
 @app.route('/taxonomy', methods=['GET', 'POST'])
-def upload_file2():
+def word_matching():
     if request.method == 'POST':
+        f1 = request.files['file1']
         f2 = request.files['file2']
+        f1.save(secure_filename(f1.filename))
         f2.save(secure_filename(f2.filename))
+        os.rename(str(f1.filename), "file1.pdf")
         os.rename(str(f2.filename), "file2.pdf")
         list1,list2 = p1.createWordArray("file1.pdf","file2.pdf")
         matchedWords = p1.getMatchedWords(list1,list2)
