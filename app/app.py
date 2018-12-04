@@ -31,19 +31,24 @@ def home():
 
 @app.route('/finance')
 def finance():
-    return render_template('finance.html')
+    classifiedText = cl_reg.classifyRegDoc("file2.pdf")
+    return render_template('finance.html',classifiedText=classifiedText)
 
 @app.route('/hr')
 def hr():
-    return render_template('HR.html')
+    classifiedText = cl_reg.classifyRegDoc("file2.pdf")
+    return render_template('HR.html',classifiedText=classifiedText)
 
 @app.route('/marketing')
 def marketing():
-    return render_template('marketing.html')
+    classifiedText = cl_reg.classifyRegDoc("file2.pdf")
+    return render_template('marketing.html',classifiedText=classifiedText)
 
 @app.route('/purchasing')
 def purchasing():
-    return render_template('purchading.html')
+    classifiedText = cl_reg.classifyRegDoc("file2.pdf")
+    return render_template('purchasing.html',classifiedText=classifiedText)
+
 
 class SignupForm(Form):
     first_name = StringField('first_name', [validators.length(min = 1, max = 50)])
@@ -207,8 +212,7 @@ def word_matching():
 @app.route('/dashboard',methods=['GET'])
 def dashboard():
     if request.method == 'GET':
-        classifiedText = cl_reg.classifyRegDoc("file2.pdf")
-        return render_template('dashboard.html',classifiedText = classifiedText,count_texts=cl_reg.count_texts)
+        return render_template('dashboard.html')
 
 
 def getMatchedArray():
