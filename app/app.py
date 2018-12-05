@@ -53,19 +53,27 @@ def purchasing():
 class SignupForm(Form):
     first_name = StringField('first_name', [validators.length(min = 1, max = 50)])
     last_name = StringField('last_name', [validators.length(min = 1, max = 50)])
-    email = StringField('email', [validators.length(min = 4, max = 50)])
+    email = StringField('email', [validators.length(min = 1, max = 50)])
     password = PasswordField('password', [validators.DataRequired(), validators.EqualTo('confirm', message = 'Passwords do not match')])
     confirm = PasswordField('Confirm Password')
     phone = IntegerField('phone')
-    organization_address = StringField('organization_address', [validators.length(min = 5, max = 100)])
+    organization_address = StringField('organization_address', [validators.length(min = 1, max = 100)])
     organization_name = StringField('organization_name', [validators.length(min = 1, max = 100)])
-    department_name = StringField('department_name', [validators.length(min = 1, max = 100)])
 
 
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
     form = SignupForm(request.form)
-    print("HelloEntry")
+    #print("HelloEntry")
+
+    print(form.first_name.data)
+    print(form.last_name.data)
+    print(form.email.data)
+    print(form.password.data)
+    print(form.phone.data)
+    print(form.organization_address.data)
+    print(form.organization_name.data)
+    print(form.first_name.data)
 
     if request.method == 'GET':
             return render_template('./signup_manager.html')
@@ -79,14 +87,13 @@ def signup():
             phone = form.phone.data
             organization_address = form.organization_address.data
             organization_name = form.organization_name.data
-            department_name = form.department_name.data
 
-            print("Hello")
+        #print("Hello")
 
             cur = mysql.connection.cursor()
             
             #Executes the SQL query
-            cur.execute("INSERT INTO users(first_name, last_name, email, password, phone, organization_address, organization_name, department_name) VALUES(%s, %s, %s, %s, %s, %s, %s, %s)", (first_name, last_name, email, password, phone, organization_address, organization_name, department_name))
+            cur.execute("INSERT INTO users(first_name, last_name, email, password, phone, organization_address, organization_name) VALUES(%s, %s, %s, %s, %s, %s, %s)", (first_name, last_name, email, password, phone, organization_address, organization_name))
             mysql.connection.commit()
             cur.close()
 
@@ -106,6 +113,15 @@ def signup():
 def login():
     print("HelloEntry")
     print(request.method)
+
+    print(session.get('email'))
+    if request.method == "GET":
+        if(session.get('logged_in')):
+            if(session['logged_in']==True):
+                return redirect(url_for('upload_files'))
+        else: 
+            return render_template('login.html' )
+
     if request.method == "POST":
         print("here")
         print(request.form['email'])
@@ -117,6 +133,7 @@ def login():
 
         cur = mysql.connection.cursor()
         result = cur.execute("SELECT * FROM users WHERE email = %s", [email])
+        print(result)
 
         print("Hello")
 
@@ -129,7 +146,7 @@ def login():
                 
                 session['logged_in'] = True
                 session['email'] = email
-                return "Success! You're now logged in."
+                return redirect(url_for('upload_files'))
             else:
                 error = "Invalid login."
                 app.logger.info('PASSWORD IS INCORRECT')
@@ -140,14 +157,19 @@ def login():
             return render_template('login.html', error=error)
         cur.close()
 
-    return "OK", status.HTTP_200_OK
+    return redirect(url_for('upload_files')), status.HTTP_200_OK
 
 
-@app.route('/logout', methods=['POST'])
+@app.route('/logout', methods=['POST','GET'])
 def logout():
-    session.clear()
-    flash('You are now logged out', 'success')
-    return "Success! You are now logged out", status.HTTP_200_OK
+        if (request.method == "GET"):
+            if(session.get('logged_in')):
+                session.clear()
+                flash('You are now logged out', 'success')
+                return "Success! You are now logged out", status.HTTP_200_OK
+
+            else:
+                return render_template('login.html' )
 
 @app.route('/uploaderabhi', methods=['POST'])
 def formdata():
