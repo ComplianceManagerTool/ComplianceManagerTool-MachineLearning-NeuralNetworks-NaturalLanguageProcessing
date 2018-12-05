@@ -31,19 +31,24 @@ def home():
 
 @app.route('/finance')
 def finance():
-    return render_template('finance.html')
+    classifiedText = cl_reg.classifyRegDoc("file2.pdf")
+    return render_template('finance.html',classifiedText=classifiedText)
 
 @app.route('/hr')
 def hr():
-    return render_template('HR.html')
+    classifiedText = cl_reg.classifyRegDoc("file2.pdf")
+    return render_template('HR.html',classifiedText=classifiedText)
 
 @app.route('/marketing')
 def marketing():
-    return render_template('marketing.html')
+    classifiedText = cl_reg.classifyRegDoc("file2.pdf")
+    return render_template('marketing.html',classifiedText=classifiedText)
 
 @app.route('/purchasing')
 def purchasing():
-    return render_template('purchasing.html')
+    classifiedText = cl_reg.classifyRegDoc("file2.pdf")
+    return render_template('purchasing.html',classifiedText=classifiedText)
+
 
 class SignupForm(Form):
     first_name = StringField('first_name', [validators.length(min = 1, max = 50)])
@@ -171,22 +176,6 @@ def contact():
 def team():
     return render_template('team.html')
 
-
-'''
-@app.route('/uploader', methods=['GET', 'POST'])
-def upload_file3():
-    if request.method == 'POST':
-        f1 = request.files['file1']
-        f2 = request.files['file2']
-        f1.save(secure_filename(f1.filename))
-        f2.save(secure_filename(f2.filename))
-        os.rename(str(f1.filename), "file1.pdf")
-        os.rename(str(f2.filename), "file2.pdf")
-        return getMatchedArray()
-'''
-
-
-
 # prevent cached responses
 @app.after_request
 def add_header(r):
@@ -223,8 +212,7 @@ def word_matching():
 @app.route('/dashboard',methods=['GET'])
 def dashboard():
     if request.method == 'GET':
-        classifiedText = cl_reg.classifyRegDoc("file2.pdf")
-        return render_template('dashboard.html',classifiedText = classifiedText,count_texts=cl_reg.count_texts)
+        return render_template('dashboard.html')
 
 
 def getMatchedArray():
