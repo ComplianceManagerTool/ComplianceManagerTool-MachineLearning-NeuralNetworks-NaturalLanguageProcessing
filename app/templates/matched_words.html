@@ -149,6 +149,31 @@ th {
 var arr = {{ matchedWords|safe }};
 console.log(arr);
 
+var count_matched = []; 
+// get top high matched 10 words with count
+for(var i=0; i<arr.length ; i++){
+    var temp = {}; 
+    temp.word = arr[i].Matchedword;
+    temp.count = Math.min( arr[i]["count in business glossary"] , arr[i]["count in regulatory doc"] );
+    count_matched.push(temp);
+}
+
+function compare(a,b) {
+  if (a.count > b.count)
+    return -1;
+  if (a.count < b.count)
+    return 1;
+  return 0;
+}
+
+count_matched.sort(compare);
+
+var topValues = count_matched.slice(0,10);
+
+console.log(topValues);
+
+
+
     // Find a <table> element with id="myTable":
 var table = document.getElementById("t01");
 table =  table.getElementsByTagName("tbody")[0];
