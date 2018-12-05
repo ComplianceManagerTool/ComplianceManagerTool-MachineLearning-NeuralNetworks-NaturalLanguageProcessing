@@ -45,7 +45,6 @@
 
 table {
     border-collapse: collapse;
-    width: 100%;
 }
 
 th, td {
@@ -54,6 +53,33 @@ th, td {
 th {
     color: white;
     background-color: #007bff;
+}
+
+.fixed_header{
+    table-layout: fixed;
+    border-collapse: collapse;
+}
+
+.fixed_header tbody{
+  display:block;
+  width: 100%;
+  overflow: auto;
+  height: 512px;
+}
+
+.fixed_header thead tr {
+   display: block;
+}
+
+.fixed_header thead {
+  background: black;
+  color:#fff;
+}
+
+.fixed_header th, .fixed_header td {
+  padding: 5px;
+  text-align: left;
+  width: 200px;
 }
     </style>
 
@@ -94,14 +120,19 @@ th {
 					</span>
 
                 </div>
-            
-                <table id="t01">
-                    <tr item-width="30px;">
-                      <th>Matched Word</th>
-                      <th>Frequency in business glossary</th> 
-                      <th>Frequency in regulatory document</th>
-                    </tr>
-                  </table>
+                
+                    <table id="t01" class="fixed_header">
+                        <thead>
+                                <tr item-width="30px;">
+                                        <th>Matched Word</th>
+                                        <th>Frequency in business glossary</th> 
+                                        <th>Frequency in regulatory document</th>
+                                        </tr>
+                        </thead>
+                        <tbody  >
+
+                        </tbody>
+                    </table>
     
             <br>
             </div>
@@ -120,12 +151,14 @@ console.log(arr);
 
     // Find a <table> element with id="myTable":
 var table = document.getElementById("t01");
+table =  table.getElementsByTagName("tbody")[0];
 
 
 for(var i=0; i<arr.length ; i++){
 
+
             // Create an empty <tr> element and add it to the 1st position of the table:
-        var row = table.insertRow();
+        var row = table.insertRow(table.rows.length);
 
         // Insert new cells (<td> elements) at the 1st and 2nd position of the "new" <tr> element:
         var cell1 = row.insertCell(0);
