@@ -243,5 +243,6 @@ def getMatchedArray():
     matchedWords = p1.getMatchedWords(list1,list2)
     return jsonify(matchedWords)
 
+
 if __name__ == '_main_':
     app.run(debug=True)
