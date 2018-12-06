@@ -35,6 +35,13 @@
 	<link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" rel="stylesheet" id="bootstrap-css">
 	<script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
 	<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+	   <script type="text/javascript" src="../static/js/jquery-3.3.1.min.js"></script>
+    <!-- Bootstrap tooltips -->
+    <script type="text/javascript" src="../static/js/popper.min.js"></script>
+    <!-- Bootstrap core JavaScript -->
+    <script type="text/javascript" src="../static/js/bootstrap.min.js"></script>
+    <!-- MDB core JavaScript -->
+    <script type="text/javascript" src="../static/js/mdb.min.js"></script>
 </head>
 
 <style>
@@ -174,6 +181,24 @@ var topValues = count_matched.slice(0,10);
 
 console.log(topValues);
 
+labels_top = []
+count_top = []
+
+topValues.forEach(
+    (el) => {
+         labels_top.push(el.word);
+    }
+);
+
+topValues.forEach(
+    (el) => {
+         count_top.push(el.count);
+    }
+);
+    // Find a <table> element with id="myTable":
+var table = document.getElementById("t01");
+table =  table.getElementsByTagName("tbody")[0];
+
 
 
     // Find a <table> element with id="myTable":
@@ -199,6 +224,63 @@ for(var i=0; i<arr.length ; i++){
 
 
 }
+		
+//chart
+var ctx = document.getElementById("myChart").getContext('2d');
+        var myChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                //labels: ["Finance", "Production", "Human Resources", "Marketing", "Information Technology"],
+                //labels: ["Finance", "Purchasing", "Marketing","HR"],
+                labels: labels_top,
+                datasets: [{
+                    label: 'Total Regulations',
+                    //data: [12, 19, 3, 5, 2, 3],
+                    //var countTexts = [275, 158, 138, 11]
+                    
+                    data: count_top,
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 206, 86, 0.2)',
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(153, 102, 255, 0.2)',
+                        'rgba(255, 159, 64, 0.2)',
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 206, 86, 0.2)',
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(153, 102, 255, 0.2)',
+                        'rgba(255, 159, 64, 0.2)'
+                    ],
+                    borderColor: [
+                        'rgba(255,99,132,1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(255, 159, 64, 1)',
+                        'rgba(255,99,132,1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(255, 159, 64, 1)'
+                        
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                }
+            }
+        });//chart
 
     </script>
 
