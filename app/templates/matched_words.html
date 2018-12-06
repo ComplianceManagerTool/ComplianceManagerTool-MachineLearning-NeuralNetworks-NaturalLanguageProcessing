@@ -130,6 +130,18 @@ th {
 
                 </div>
                 
+		<!--Card-->
+                  <div class="card" style="width:600px; margin-bottom: 10px; margin-left:-50px;">
+
+                    <!--Card content-->
+                    <div class="card-body">
+
+                        <canvas id="myChart"></canvas>
+
+                    </div>
+
+                </div>
+                <!--/.Card-->
                     <table id="t01" class="fixed_header">
                         <thead>
                                 <tr item-width="30px;">
@@ -234,7 +246,7 @@ var ctx = document.getElementById("myChart").getContext('2d');
                 //labels: ["Finance", "Purchasing", "Marketing","HR"],
                 labels: labels_top,
                 datasets: [{
-                    label: 'Total Regulations',
+                    label: 'Top ten matched words',
                     //data: [12, 19, 3, 5, 2, 3],
                     //var countTexts = [275, 158, 138, 11]
                     
