@@ -234,7 +234,29 @@ def word_matching():
 @app.route('/dashboard',methods=['GET'])
 def dashboard():
     if request.method == 'GET':
-        return render_template('dashboard.html')
+        count_texts = []
+        count_fin = 0
+        count_mkt = 0
+        count_pur = 0
+        count_hr = 0
+        classifiedText = cl_reg.classifyRegDoc("file2.pdf")
+        if 'Finance' in classifiedText:
+            for i in classifiedText['Finance']:
+                count_fin = count_fin + 1
+        if 'Marketing' in classifiedText:                    
+            for i in classifiedText['Marketing']:
+                count_mkt = count_mkt + 1
+        if 'Purchasing' in classifiedText:
+            for i in classifiedText['Purchasing']:
+                count_pur = count_pur + 1            
+        if 'HR' in classifiedText:
+            for i in classifiedText['HR']:
+                count_hr = count_hr + 1            
+        count_texts.append(count_fin)
+        count_texts.append(count_mkt)
+        count_texts.append(count_pur)
+        count_texts.append(count_hr)        
+        return render_template('dashboard.html',count_texts = count_texts)
 
 
 def getMatchedArray():
