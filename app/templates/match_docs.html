@@ -65,34 +65,37 @@
 		</a>
 
 		<div class="list-group list-group-flush">
-			<a href="#" class="list-group-item active waves-effect">
+			<a href="/upload" class="list-group-item active waves-effect">
 				<i class="fa fa-home mr-3"></i>Home</a>
 				<a href="/about" class="list-group-item list-group-item-action waves-effect">
 						<i class="fa fa-book mr-3"></i>About CMT</a>
 			<a href="/team" class="list-group-item list-group-item-action waves-effect">
 				<i class="fa fa-user mr-3"></i>Meet The Team</a>
-			<a href="/contact" class="list-group-item list-group-item-action waves-effect">
-				<i class="fa fa-phone mr-3"></i>Contact Us</a>
+			<!--<a href="/contact" class="list-group-item list-group-item-action waves-effect">
+				<i class="fa fa-phone mr-3"></i>Contact Us</a>-->
 		</div>
 
 	</div>
 	
 	<!-- Sidebar -->
-	
 	<div class="limiter">
 		<div class="container-login100">
 			<div class="wrap-login100">
-				<div class="upload"  >
+					<h4 style="margin-left:100px;margin-top:20px;"> Welcome to CMT! Upload your Business Glossary and Regulatory Document to get started</h4>					
+					<div class="login100-pic js-tilt" style="margin-right:300px;margin-top:70px;" data-tilt>
+							<img src="../static/images/98.jpg" alt="IMG">
+						</div>
+				<div class="upload" style="margin-left: 350px;margin-top: -300px;height:480px;">
                     <form  enctype = "multipart/form-data"
                      action = "http://localhost:5000/taxonomy" method = "post">
-					 <h4> Upload Business Glossary </h4>
+					 <h5> Upload Business Glossary </h5>
                      <br>
 						   <input type = "file" name = "file1" />
 						   
 						   <br> <br>
 						   <br> <br>
-					 <h4> Upload compliance </h4>
-					 <h4>Upload Regulatory Document</h4>                    
+					 <h5>Upload Compliance </h5>
+					 <h5>Regulatory Document</h5>                    
                      <br>
 						   <input type = "file" name = "file2" />
 						   
