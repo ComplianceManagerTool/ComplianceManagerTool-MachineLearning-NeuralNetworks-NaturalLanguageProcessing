@@ -34,8 +34,15 @@
 
 	<link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" rel="stylesheet" id="bootstrap-css">
 	<script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
+
+    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+    
+
+    <script type="text/javascript" src="../static/js/jquery-3.3.1.min.js"></script>
+
 	<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
 	   <script type="text/javascript" src="../static/js/jquery-3.3.1.min.js"></script>
+
     <!-- Bootstrap tooltips -->
     <script type="text/javascript" src="../static/js/popper.min.js"></script>
     <!-- Bootstrap core JavaScript -->
@@ -104,14 +111,14 @@ th {
 		<div class="list-group list-group-flush">
 			<a href="/dashboard" class="list-group-item active waves-effect">
                 <i class="fa fa-pie-chart mr-3"></i>Dashboard</a>
-                <a href="/" class="list-group-item list-group-item-action waves-effect">
+                <a href="/upload" class="list-group-item list-group-item-action waves-effect">
                 <i class="fa fa-home mr-3"></i>Home</a>
                 <a href="/about" class="list-group-item list-group-item-action waves-effect">
                         <i class="fa fa-book mr-3"></i>About CMT</a>
-            <a href="/team" class="list-group-item list-group-item-action waves-effect">
-                <i class="fa fa-user mr-3"></i>Meet The Team</a>
-            <a href="/contact" class="list-group-item list-group-item-action waves-effect">
-                <i class="fa fa-phone mr-3"></i>Contact Us</a>
+            <!--<a href="/team" class="list-group-item list-group-item-action waves-effect">
+                <i class="fa fa-user mr-3"></i>Meet The Team</a>-->
+            <!--<a href="/contact" class="list-group-item list-group-item-action waves-effect">
+                <i class="fa fa-phone mr-3"></i>Contact Us</a>-->
                 <a href="/logout" class="list-group-item list-group-item-action waves-effect" >
                     <i class="fa fa-sign-out mr-3"></i> Logout</a>
 		</div>
@@ -129,8 +136,8 @@ th {
 					</span>
 
                 </div>
-                
-		<!--Card-->
+
+                  <!--Card-->
                   <div class="card" style="width:600px; margin-bottom: 10px; margin-left:-50px;">
 
                     <!--Card content-->
@@ -142,6 +149,7 @@ th {
 
                 </div>
                 <!--/.Card-->
+            
                     <table id="t01" class="fixed_header">
                         <thead>
                                 <tr item-width="30px;">
@@ -179,6 +187,7 @@ for(var i=0; i<arr.length ; i++){
     count_matched.push(temp);
 }
 
+
 function compare(a,b) {
   if (a.count > b.count)
     return -1;
@@ -207,9 +216,11 @@ topValues.forEach(
          count_top.push(el.count);
     }
 );
+
     // Find a <table> element with id="myTable":
 var table = document.getElementById("t01");
 table =  table.getElementsByTagName("tbody")[0];
+
 
 
 
@@ -260,6 +271,63 @@ var ctx = document.getElementById("myChart").getContext('2d');
                         'rgba(255, 159, 64, 0.2)',
                         'rgba(255, 99, 132, 0.2)',
                         'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 206, 86, 0.2)',
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(153, 102, 255, 0.2)',
+                        'rgba(255, 159, 64, 0.2)'
+                    ],
+                    borderColor: [
+                        'rgba(255,99,132,1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(255, 159, 64, 1)',
+                        'rgba(255,99,132,1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(255, 159, 64, 1)'
+                        
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                }
+            }
+        });//chart
+
+//chart
+var ctx = document.getElementById("myChart").getContext('2d');
+        var myChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                //labels: ["Finance", "Production", "Human Resources", "Marketing", "Information Technology"],
+                //labels: ["Finance", "Purchasing", "Marketing","HR"],
+                labels: labels_top,
+                datasets: [{
+                    label: 'Top ten matched words',
+                    //data: [12, 19, 3, 5, 2, 3],
+                    //var countTexts = [275, 158, 138, 11]
+                    
+                    data: count_top,
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 206, 86, 0.2)',
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(153, 102, 255, 0.2)',
+                        'rgba(255, 159, 64, 0.2)',
+                        'rgba(255, 99, 138, 0.2)',
+                        'rgba(55, 262, 540, 0.2)',
                         'rgba(255, 206, 86, 0.2)',
                         'rgba(75, 192, 192, 0.2)',
                         'rgba(153, 102, 255, 0.2)',

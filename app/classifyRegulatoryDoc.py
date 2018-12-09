@@ -22,7 +22,7 @@ import data_processing as dp
 
 
 
-df = pd.read_csv("training_data - Sheet1.csv")
+df = pd.read_csv("training_data - Sheet2.csv")
 df['category_id'] = df['category'].factorize()[0]
 category_id_df = df[['category', 'category_id']].drop_duplicates().sort_values('category_id')
 category_to_id = dict(category_id_df.values)

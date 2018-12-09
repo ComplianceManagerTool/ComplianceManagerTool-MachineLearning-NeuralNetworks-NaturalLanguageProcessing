@@ -255,7 +255,8 @@ def dashboard():
         count_texts.append(count_fin)
         count_texts.append(count_mkt)
         count_texts.append(count_pur)
-        count_texts.append(count_hr)        
+        count_texts.append(count_hr)  
+        print(count_fin,count_hr,count_mkt,count_pur)      
         return render_template('dashboard.html',count_texts = count_texts)
 
 
