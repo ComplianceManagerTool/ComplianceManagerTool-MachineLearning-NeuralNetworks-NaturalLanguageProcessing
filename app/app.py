@@ -120,7 +120,7 @@ def login():
             if(session['logged_in']==True):
                 return redirect(url_for('upload_files'))
         else: 
-            return render_template('login.html' )
+            return render_template('login.html')
 
     if request.method == "POST":
         print("here")
