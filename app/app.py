@@ -6,6 +6,10 @@ from flask_api import status
 from wtforms import Form, StringField, TextAreaField, PasswordField, validators
 from wtforms_components import IntegerField
 from passlib.hash import sha256_crypt
+from flask import Flask
+from flask_mail import Mail
+from flask_mail import Message
+
 
 import os
 #from flask_restful import Resource, Api
@@ -15,6 +19,7 @@ import classifyRegulatoryDoc as cl_reg
 from flask import request
 
 app = Flask(__name__)
+mail = Mail(app)
 app.secret_key = 'super secret key'
 
 app.config['MYSQL_HOST'] = 'localhost'
@@ -27,28 +32,73 @@ mysql = MySQL(app)
 
 @app.route('/')
 def home():
-    return render_template('login.html')
+    if request.method == "GET":
+        if(session.get('logged_in')):
+            if(session['logged_in']==True):
+                return redirect(url_for('upload_files'))
+        else: 
+            return render_template('login.html')
 
 @app.route('/finance')
 def finance():
-    classifiedText = cl_reg.classifyRegDoc("file2.pdf")
-    return render_template('finance.html',classifiedText=classifiedText)
+    if request.method == "GET":
+        if(session.get('logged_in')):
+            if(session['logged_in']==True):
+                classifiedText = cl_reg.classifyRegDoc("file2.pdf")
+                return render_template('finance.html',classifiedText=classifiedText)
+        else: 
+            return render_template('login.html')
 
 @app.route('/hr')
 def hr():
-    classifiedText = cl_reg.classifyRegDoc("file2.pdf")
-    return render_template('HR.html',classifiedText=classifiedText)
+    if request.method == "GET":
+        if(session.get('logged_in')):
+            if(session['logged_in']==True):
+                classifiedText = cl_reg.classifyRegDoc("file2.pdf")
+                return render_template('HR.html',classifiedText=classifiedText)
+        else: 
+            return render_template('login.html')
 
 @app.route('/marketing')
 def marketing():
-    classifiedText = cl_reg.classifyRegDoc("file2.pdf")
-    return render_template('marketing.html',classifiedText=classifiedText)
+    if request.method == "GET":
+        if(session.get('logged_in')):
+            if(session['logged_in']==True):
+                classifiedText = cl_reg.classifyRegDoc("file2.pdf")
+                return render_template('marketing.html',classifiedText=classifiedText)
+        else: 
+            return render_template('login.html')
 
 @app.route('/purchasing')
 def purchasing():
-    classifiedText = cl_reg.classifyRegDoc("file2.pdf")
-    return render_template('purchasing.html',classifiedText=classifiedText)
+    if request.method == "GET":
+        if(session.get('logged_in')):
+            if(session['logged_in']==True):
+                classifiedText = cl_reg.classifyRegDoc("file2.pdf")
+                return render_template('purchasing.html',classifiedText=classifiedText)
+        else: 
+            return render_template('login.html')
 
+
+app.config.update(
+	DEBUG=True,
+	#EMAIL SETTINGS
+	MAIL_SERVER='smtp.gmail.com',
+	MAIL_PORT=465,
+	MAIL_USE_SSL=True,
+	MAIL_USERNAME = 'surveyape275@gmail.com',
+	MAIL_PASSWORD = 'Surveyape295b'
+	)
+
+mail=Mail(app)
+
+@app.route('/mail')
+def sendMail():
+    if request.method == 'GET':
+        msg = Message("Hello", sender="surveyape275@gmail.com", recipients=["surveyape275@gmail.com"])
+        mail.send(msg)
+        flash("Your email is sent")
+        return render_template('./dashboard.html')
 
 class SignupForm(Form):
     first_name = StringField('first_name', [validators.length(min = 1, max = 50)])
@@ -76,6 +126,8 @@ def signup():
     print(form.first_name.data)
 
     if request.method == 'GET':
+        if (session.get('logged_in')):
+            return render_template('./login.html')
             return render_template('./signup_manager.html')
 
     if request.method == 'POST':
@@ -120,7 +172,7 @@ def login():
             if(session['logged_in']==True):
                 return redirect(url_for('upload_files'))
         else: 
-            return render_template('login.html' )
+            return render_template('login.html')
 
     if request.method == "POST":
         print("here")
@@ -166,10 +218,9 @@ def logout():
             if(session.get('logged_in')):
                 session.clear()
                 flash('You are now logged out', 'success')
-                return "Success! You are now logged out", status.HTTP_200_OK
-
+                return render_template('./login.html')
             else:
-                return render_template('login.html' )
+                return render_template('./login.html')
 
 @app.route('/uploaderabhi', methods=['POST'])
 def formdata():
@@ -184,7 +235,11 @@ def formdata():
 
 @app.route('/matchdocs')
 def match_docs():
-    return render_template('match_docs.html')
+    if request.method == "GET":
+        if not(session.get('logged_in')):
+            return render_template('./login.html')
+        else:        
+            return render_template('match_docs.html')
 
 @app.route('/about')
 def about():
@@ -215,7 +270,11 @@ def add_header(r):
 
 @app.route('/upload', methods=['GET', 'POST'])
 def upload_files():
-        return render_template('match_docs.html')
+    if request.method == "GET":
+        if not(session.get('logged_in')):
+            return render_template('./login.html')
+        else:
+            return render_template('match_docs.html')
 
 @app.route('/taxonomy', methods=['GET', 'POST'])
 def word_matching():
@@ -233,6 +292,10 @@ def word_matching():
         
 @app.route('/dashboard',methods=['GET'])
 def dashboard():
+    if request.method == "GET":
+        if not(session.get('logged_in')):
+            return render_template('./login.html')
+    
     if request.method == 'GET':
         count_texts = []
         count_fin = 0
