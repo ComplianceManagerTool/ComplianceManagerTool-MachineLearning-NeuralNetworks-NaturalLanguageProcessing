@@ -125,6 +125,15 @@ th {
 	
 <script>
 
+    var htmlStr = `
+
+<form class="login100-form" action="http://localhost:5000/signup" method="POST" enctype="multipart/form-data">
+
+ <input  type="text" name="email" placeholder="Email address"> 
+<button class="login100-form-btn" type="submit"> Notify</button>
+</form>
+`;
+
         var arr = {{ classifiedText|safe }};
      
      var table = document.getElementById("t01");
@@ -136,7 +145,7 @@ th {
           // Insert new cells (<td> elements) at the 1st and 2nd position of the "new" <tr> element:
          var cell1 = row.insertCell(0);
          var cell2 = row.insertCell(1);
-         //var cell3 = row.insertCell(2);
+         var cell3 = row.insertCell(2);
      
          // Add some text to the new     cells:
          cell1.innerHTML = arr['HR'][i];
@@ -147,6 +156,8 @@ th {
             {
                 cell2.innerHTML = '<i class="fa fa-times mr-3 cross"></i>';
             }
+            cell3.innerHTML = htmlStr;
+
         }
      
      </script>

@@ -126,6 +126,15 @@ th {
 	
 <script>
 
+    var htmlStr = `
+
+<form class="login100-form" action="http://localhost:5000/signup" method="POST" enctype="multipart/form-data">
+
+ <input  type="text" name="email" placeholder="Email address"> 
+<button class="login100-form-btn" type="submit"> Notify</button>
+</form>
+`;
+
         var arr = {{ classifiedText|safe }};
      
      var table = document.getElementById("t01");
@@ -148,6 +157,9 @@ th {
             {
                 cell2.innerHTML = '<i class="fa fa-times mr-3 cross"></i>';
             }
+
+                    cell3.innerHTML = htmlStr;
+
         }
      
      </script>
