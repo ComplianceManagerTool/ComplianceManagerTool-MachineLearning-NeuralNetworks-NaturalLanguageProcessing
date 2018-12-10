@@ -163,9 +163,9 @@ th {
 var htmlStr = `
 
  <form class="login100-form" action="http://localhost:5000/mailFinance" method="POST" enctype="multipart/form-data">
-
- <input type="hidden" id="para" name="para" value=arr['Finance'][i] >
   <input  type="text" name="email" placeholder="Email address"> 
+  <input  type="text" name="msg" placeholder="Message"> 
+
 <button class="login100-form-btn" type="submit"> Notify</button>
 </form>
 `;
@@ -194,8 +194,6 @@ var table = document.getElementById("t01");
         }
 
         cell3.innerHTML = htmlStr;
-
-        cell3.innerHTML.getElementById("para").value = arr['Finance'][i];
     
    }
 
