@@ -153,7 +153,10 @@ def signup():
     print(form.first_name.data)
 
     if request.method == 'GET':
-        return render_template('./signup_manager.html')
+        if (session.get('logged_in')):
+            return redirect(url_for('upload_files'))
+        else:    
+            return render_template('./signup_manager.html')
 
     if request.method == 'POST':
         if form.validate():
