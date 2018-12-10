@@ -90,6 +90,10 @@ th {
     transition: all 0.4s;
 }
 
+.login100-form {
+    margin-left: 0%;
+}
+
     </style>
 
 
@@ -142,6 +146,8 @@ th {
     
             <br>
             </div>
+
+            
            
         </div>
 	</div>
@@ -150,6 +156,17 @@ th {
 <script>
 
    var arr = {{ classifiedText|safe }};
+
+
+var htmlStr = `
+
+ <form class="login100-form" action="http://localhost:5000/signup" method="POST" enctype="multipart/form-data">
+
+  <input  type="text" name="email" placeholder="Email address"> 
+<button class="login100-form-btn" type="submit"> Notify</button>
+</form>
+`;
+
 
 var table = document.getElementById("t01");
    for(var i=0; i<arr['Finance'].length ; i++){
@@ -172,7 +189,7 @@ var table = document.getElementById("t01");
             cell2.innerHTML = '<i class="fa fa-times mr-3 cross"></i>';
         }
 
-        cell3.innerHTML = '<input  type="text" name="email" placeholder="Email address">  <button class="login100-form-btn" type="submit"> Notify	</button> ';
+        cell3.innerHTML = htmlStr;
     
    }
 
