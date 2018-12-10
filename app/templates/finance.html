@@ -65,6 +65,35 @@ th {
     font-size: 51px ; 
     color: #700822;
 }
+
+.login100-form-btn {
+    font-family: 'Google Sans',arial,sans-serif;
+    font-size: 15px;
+    line-height: 1.5;
+    color: #fff;
+    text-transform: uppercase;
+    width: 100%;
+    height: 30px;
+    border-radius: 25px;
+    background: #007bff;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 25px;
+    -webkit-transition: all 0.4s;
+    -o-transition: all 0.4s;
+    -moz-transition: all 0.4s;
+    transition: all 0.4s;
+}
+
+.login100-form {
+    margin-left: 0%;
+}
+
     </style>
 
 
@@ -113,12 +142,14 @@ th {
                     <tr item-width="30px;">
                       <th>Regulatory Requirements</th>
                       <th>Compliant/not</th> 
-                      <!-- <th>Frequency in regulatory document</th> -->
+                      <th>Notify</th>
                     </tr>
                   </table>
     
             <br>
             </div>
+
+            
            
         </div>
 	</div>
@@ -127,6 +158,17 @@ th {
 <script>
 
    var arr = {{ classifiedText|safe }};
+
+
+var htmlStr = `
+
+ <form class="login100-form" action="http://localhost:5000/signup" method="POST" enctype="multipart/form-data">
+
+  <input  type="text" name="email" placeholder="Email address"> 
+<button class="login100-form-btn" type="submit"> Notify</button>
+</form>
+`;
+
 
 var table = document.getElementById("t01");
    for(var i=0; i<arr['Finance'].length ; i++){
@@ -137,7 +179,7 @@ var table = document.getElementById("t01");
      // Insert new cells (<td> elements) at the 1st and 2nd position of the "new" <tr> element:
     var cell1 = row.insertCell(0);
     var cell2 = row.insertCell(1);
-    //var cell3 = row.insertCell(2);
+    var cell3 = row.insertCell(2);
 
     // Add some text to the new     cells:
     cell1.innerHTML = arr['Finance'][i];
@@ -148,6 +190,8 @@ var table = document.getElementById("t01");
         {
             cell2.innerHTML = '<i class="fa fa-times mr-3 cross"></i>';
         }
+
+        cell3.innerHTML = htmlStr;
     
    }
 
