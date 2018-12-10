@@ -92,13 +92,39 @@ app.config.update(
 
 mail=Mail(app)
 
-@app.route('/mail')
-def sendMail():
-    if request.method == 'GET':
-        msg = Message("Hello", sender="surveyape275@gmail.com", recipients=["surveyape275@gmail.com"])
+@app.route('/mailFinance', methods=['GET', 'POST'])
+def sendMailFinance():
+    if request.method == 'POST':
+        msg = Message(request.form['para'], sender="surveyape275@gmail.com", recipients=[request.form['email']])
+        mail.send(msg)
+        # print("I'm Chitti")
+        # print(request.form['para'])
+        flash("Your email is sent")
+        return redirect(url_for('finance'))
+
+@app.route('/mailHr', methods=['GET', 'POST'])
+def sendMailHr():
+    if request.method == 'POST':
+        msg = Message("Hello", sender="surveyape275@gmail.com", recipients=[request.form['email']])
         mail.send(msg)
         flash("Your email is sent")
-        return render_template('./dashboard.html')
+        return redirect(url_for('hr'))
+
+@app.route('/mailPurchasing', methods=['GET', 'POST'])
+def sendMailPurchasing():
+    if request.method == 'POST':
+        msg = Message("Hello", sender="surveyape275@gmail.com", recipients=[request.form['email']])
+        mail.send(msg)
+        flash("Your email is sent")
+        return redirect(url_for('purchasing'))
+
+@app.route('/mailMarketing', methods=['GET', 'POST'])
+def sendMailMarketing():
+    if request.method == 'POST':
+        msg = Message("Hello", sender="surveyape275@gmail.com", recipients=[request.form['email']])
+        mail.send(msg)
+        flash("Your email is sent")
+        return redirect(url_for('marketing'))
 
 class SignupForm(Form):
     first_name = StringField('first_name', [validators.length(min = 1, max = 50)])
