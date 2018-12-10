@@ -81,21 +81,22 @@ def purchasing():
 
 
 app.config.update(
-	DEBUG=True,
-	#EMAIL SETTINGS
-	MAIL_SERVER='smtp.gmail.com',
-	MAIL_PORT=465,
-	MAIL_USE_SSL=True,
-	MAIL_USERNAME = 'surveyape275@gmail.com',
-	MAIL_PASSWORD = 'Surveyape295b'
-	)
+    DEBUG=True,
+    #EMAIL SETTINGS
+    MAIL_SERVER='smtp.gmail.com',
+    MAIL_PORT=465,
+    MAIL_USE_SSL=True,
+    MAIL_USERNAME = 'surveyape275@gmail.com',
+    MAIL_PASSWORD = 'Surveyape295b'
+    )
 
 mail=Mail(app)
 
 @app.route('/mailFinance', methods=['GET', 'POST'])
 def sendMailFinance():
     if request.method == 'POST':
-        msg = Message(request.form['para'], sender="surveyape275@gmail.com", recipients=[request.form['email']])
+        msg = Message("Hello, this is a sample subject", sender="surveyape275@gmail.com", recipients=[request.form['email']])
+        msg.body = request.form['msg']
         mail.send(msg)
         # print("I'm Chitti")
         # print(request.form['para'])
@@ -152,9 +153,7 @@ def signup():
     print(form.first_name.data)
 
     if request.method == 'GET':
-        if (session.get('logged_in')):
-            return render_template('./login.html')
-            return render_template('./signup_manager.html')
+        return render_template('./signup_manager.html')
 
     if request.method == 'POST':
         if form.validate():
