@@ -164,6 +164,8 @@ var htmlStr = `
 
  <form class="login100-form" action="http://localhost:5000/mail" method="POST" enctype="multipart/form-data">
 
+ <input type="hidden" id="para" name="para" value="3487">
+
   <input  type="text" name="email" placeholder="Email address"> 
 <button class="login100-form-btn" type="submit"> Notify</button>
 </form>
@@ -183,6 +185,7 @@ var table = document.getElementById("t01");
 
     // Add some text to the new     cells:
     cell1.innerHTML = arr['Finance'][i];
+        
         if( Math.random() < 0.7 ) {
             cell2.innerHTML = '<i class="fa fa-check mr-3 check"></i>';
         }
@@ -192,6 +195,8 @@ var table = document.getElementById("t01");
         }
 
         cell3.innerHTML = htmlStr;
+
+        cell3.innerHTML.getElementById("para").value = arr['Finance'][i];
     
    }
 
