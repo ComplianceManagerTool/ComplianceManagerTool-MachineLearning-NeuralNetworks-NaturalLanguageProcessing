@@ -19,7 +19,7 @@ app.secret_key = 'super secret key'
 
 app.config['MYSQL_HOST'] = 'localhost'
 app.config['MYSQL_USER'] = 'root'
-app.config['MYSQL_PASSWORD'] = 'root'
+app.config['MYSQL_PASSWORD'] = 'akansha'
 app.config['MYSQL_DB'] = 'cmpe295b'
 app.config['MYSQL_CURSORCLASS'] = 'DictCursor'
 
